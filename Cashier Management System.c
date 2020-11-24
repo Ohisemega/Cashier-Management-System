@@ -1,28 +1,27 @@
-
 /*cashier management app
 uses libexpat or ezxml library
 1. Add Cashier.
 2. Remove cashier.
 3. Suspend cashier.//add another field to suspend
-4. Traverse cashier.
+4
+. Traverse cashier.
 5. Edit Cashier.
 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "ezxml.h"
 
+void addCashier (ezxml_t);
+void removeCashier (ezxml_t);
+void suspendCashier (ezxml_t);
+void traverseCashier (ezxml_t);
+void editCashier (ezxml_t);
 
-void addCashier (ezxml_t cashier);
-void removeCashier (ezxml_t cashier);
-void suspendCashier (void);
-void traverseCashier (ezxml_t cashier);
-void editCashier (void);
-int main()
+int main(void)
 {
-const char *cName;
 ezxml_t cashier = ezxml_parse_file("Cashier Data.xml"), Workers, name;
+const char *cName;
 
 printf("Hello, welcome to the Cashier database Management System!");
     printf("what would you like to do?\n");
@@ -34,7 +33,7 @@ printf("Hello, welcome to the Cashier database Management System!");
 int val;
 while ( val != 0)
 {
-    printf("Enter an option");
+    printf("Enter an option\n");
 
     switch (val)
     {
@@ -42,13 +41,13 @@ while ( val != 0)
     break;
     case 2: removeCashier(cashier);
     break;
-    case 3: suspendCashier();
+    case 3: suspendCashier(cashier);
     break;
     case 4: traverseCashier(cashier);
     break;
-    case 5: editCashier();
+    case 5: editCashier(cashier);
     break;
-    default: printf("Incorrect option entered, please try again!");
+    default: printf("Incorrect option entered, please try again!\n");
     }
 }
     ezxml_free(cashier);
@@ -61,7 +60,7 @@ void addCashier (ezxml_t cashier)
     printf("Enter the tag which you wish to append: \n");
     scanf("%c", &tagAppend);
     printf("Enter the offset value: \n");
-    scanf("%c", &offSize);
+    scanf("%n", &offSize);
     if (ezxml_child(cashier, &tagAppend) != NULL)
     {
         //ezxml_t *worker = ezxml_child(cashier, &tagAppend);
@@ -98,12 +97,18 @@ void traverseCashier (ezxml_t cashier)
     };
 }
 
-void editCashier(void)
+void editCashier(ezxml_t cashier)
 {
-
+    ezxml_t tag;
+    char charact;
+    printf("Enter the tag which you wish to edit");
+    scanf("%c", &charact);
+    printf("Enter the value of the text which you wish to append the tag with");
+    scanf("%c", &charact);
+    ezxml_set_txt_d(cashier, &charact);
 }
 
-void suspendCashier(void)
+void suspendCashier(ezxml_t cashier)
 {
 
 }
